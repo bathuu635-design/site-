@@ -14,9 +14,16 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    match /customers/{customerId} {
+      allow read: if signedIn();
+      allow create: if isAdmin() || (signedIn() && request.resource.data.uid == request.auth.uid);
+      allow update: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow delete: if isAdmin();
+    }
+
     match /orders/{orderId} {
-      allow create: if true;
-      allow read: if isAdmin() || (signedIn() && resource.data.customer.phone == request.auth.token.phone_number);
+      allow create: if signedIn() && request.resource.data.customerUid == request.auth.uid;
+      allow read: if isAdmin() || (signedIn() && resource.data.customerUid == request.auth.uid);
       allow update: if isAdmin();
       allow delete: if isAdmin();
     }
