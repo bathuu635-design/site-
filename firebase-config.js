@@ -1,11 +1,10 @@
-// Firebase configuration for Little BO kids store.
-// Replace the placeholder values with your Firebase Web App config.
-// Firebase Console -> Project settings -> Your apps -> Web app.
+// Firebase Web App configuration for Little BO kids store.
 export const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCz7XB01DtVJ14AepPhS1pNo0PwR_lDPUI",
+  authDomain: "little-bo-kids-store.firebaseapp.com",
+  projectId: "little-bo-kids-store",
+  storageBucket: "little-bo-kids-store.firebasestorage.app",
+  messagingSenderId: "680085282375",
+  appId: "1:680085282375:web:05f7aa5001fca6a9ae1b62",
+  measurementId: "G-2856KEY02B"
 };
