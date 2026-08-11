@@ -3,29 +3,9 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
     function isAdmin() { return signedIn() && request.auth.token.email == '12345678littlebo.local@gmail.com'; }
-
-    match /products/{productId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-
-    match /settings/{settingId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-
-    match /customers/{customerId} {
-      allow read: if signedIn();
-      allow create: if isAdmin() || (signedIn() && request.resource.data.uid == request.auth.uid);
-      allow update: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
-      allow delete: if isAdmin();
-    }
-
-    match /orders/{orderId} {
-      allow create: if signedIn() && request.resource.data.customerUid == request.auth.uid;
-      allow read: if isAdmin() || (signedIn() && resource.data.customerUid == request.auth.uid);
-      allow update: if isAdmin();
-      allow delete: if isAdmin();
-    }
+    match /products/{productId} { allow read: if true; allow create, update, delete: if isAdmin(); }
+    match /settings/{settingId} { allow read: if true; allow create, update, delete: if isAdmin(); }
+    match /orders/{orderId} { allow create: if true; allow read: if isAdmin(); allow update, delete: if isAdmin(); }
+    match /customers/{customerId} { allow read, write: if false; }
   }
 }
