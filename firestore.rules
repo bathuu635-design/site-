@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.token.email == '12345678littlebo.local@gmail.com'; }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read: if isAdmin() || (signedIn() && resource.data.customer.phone == request.auth.token.phone_number);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+  }
+}
